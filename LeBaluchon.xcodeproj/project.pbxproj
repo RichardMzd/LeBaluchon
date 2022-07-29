@@ -7,15 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		21168B24B9475371F5398A36 /* Pods_LeBaluchon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43BC929D0E5493A03B62CCF1 /* Pods_LeBaluchon.framework */; };
+		534C3802288A026B00368170 /* Lottie_Currency.json in Resources */ = {isa = PBXBuildFile; fileRef = 534C3801288A026B00368170 /* Lottie_Currency.json */; };
 		5376010D285114FF00A9D833 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5376010C285114FF00A9D833 /* AppDelegate.swift */; };
 		5376010F285114FF00A9D833 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5376010E285114FF00A9D833 /* SceneDelegate.swift */; };
-		53760111285114FF00A9D833 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53760110285114FF00A9D833 /* ViewController.swift */; };
 		53760114285114FF00A9D833 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53760112285114FF00A9D833 /* Main.storyboard */; };
 		537601162851150600A9D833 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 537601152851150600A9D833 /* Assets.xcassets */; };
 		537601192851150600A9D833 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 537601172851150600A9D833 /* LaunchScreen.storyboard */; };
 		537601242851150700A9D833 /* LeBaluchonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537601232851150700A9D833 /* LeBaluchonTests.swift */; };
 		5376012E2851150700A9D833 /* LeBaluchonUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5376012D2851150700A9D833 /* LeBaluchonUITests.swift */; };
 		537601302851150700A9D833 /* LeBaluchonUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5376012F2851150700A9D833 /* LeBaluchonUITestsLaunchTests.swift */; };
+		5376013E2851154500A9D833 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5376013D2851154500A9D833 /* WeatherViewController.swift */; };
+		53760140285115D500A9D833 /* CurrencyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5376013F285115D500A9D833 /* CurrencyViewController.swift */; };
+		537601422851161100A9D833 /* TranslationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537601412851161100A9D833 /* TranslationViewController.swift */; };
+		53B0AC7A2893D01E00C00469 /* TranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B0AC792893D01E00C00469 /* TranslationService.swift */; };
+		53B0AC7C2893D02F00C00469 /* Translation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B0AC7B2893D02F00C00469 /* Translation.swift */; };
+		53CD127D2874BA9B00153C7E /* Lottie_Translate.json in Resources */ = {isa = PBXBuildFile; fileRef = 53CD127C2874BA9B00153C7E /* Lottie_Translate.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,10 +43,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		43BC929D0E5493A03B62CCF1 /* Pods_LeBaluchon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LeBaluchon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		534C3801288A026B00368170 /* Lottie_Currency.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Lottie_Currency.json; path = ../../../../Downloads/Lottie_Currency.json; sourceTree = "<group>"; };
 		53760109285114FF00A9D833 /* LeBaluchon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeBaluchon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5376010C285114FF00A9D833 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5376010E285114FF00A9D833 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		53760110285114FF00A9D833 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		53760113285114FF00A9D833 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		537601152851150600A9D833 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		537601182851150600A9D833 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +57,14 @@
 		537601292851150700A9D833 /* LeBaluchonUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LeBaluchonUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5376012D2851150700A9D833 /* LeBaluchonUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeBaluchonUITests.swift; sourceTree = "<group>"; };
 		5376012F2851150700A9D833 /* LeBaluchonUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeBaluchonUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		5376013D2851154500A9D833 /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
+		5376013F285115D500A9D833 /* CurrencyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyViewController.swift; sourceTree = "<group>"; };
+		537601412851161100A9D833 /* TranslationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationViewController.swift; sourceTree = "<group>"; };
+		53B0AC792893D01E00C00469 /* TranslationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationService.swift; sourceTree = "<group>"; };
+		53B0AC7B2893D02F00C00469 /* Translation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translation.swift; sourceTree = "<group>"; };
+		53CD127C2874BA9B00153C7E /* Lottie_Translate.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Lottie_Translate.json; sourceTree = "<group>"; };
+		672C9A7D5017F871B46F2BFE /* Pods-LeBaluchon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeBaluchon.release.xcconfig"; path = "Target Support Files/Pods-LeBaluchon/Pods-LeBaluchon.release.xcconfig"; sourceTree = "<group>"; };
+		FD12DE2C610D39DD6B735029 /* Pods-LeBaluchon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeBaluchon.debug.xcconfig"; path = "Target Support Files/Pods-LeBaluchon/Pods-LeBaluchon.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21168B24B9475371F5398A36 /* Pods_LeBaluchon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +100,8 @@
 				537601222851150700A9D833 /* LeBaluchonTests */,
 				5376012C2851150700A9D833 /* LeBaluchonUITests */,
 				5376010A285114FF00A9D833 /* Products */,
+				5EAB8530D19790EF16A369E7 /* Pods */,
+				A16DA5B13B0B2480FF21ACE4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -101,7 +120,9 @@
 			children = (
 				5376010C285114FF00A9D833 /* AppDelegate.swift */,
 				5376010E285114FF00A9D833 /* SceneDelegate.swift */,
-				53760110285114FF00A9D833 /* ViewController.swift */,
+				5376013C2851152300A9D833 /* Controllers */,
+				53B0AC782893CCA200C00469 /* Model */,
+				53CD127B2874BA5600153C7E /* Animations */,
 				53760112285114FF00A9D833 /* Main.storyboard */,
 				537601152851150600A9D833 /* Assets.xcassets */,
 				537601172851150600A9D833 /* LaunchScreen.storyboard */,
@@ -127,6 +148,59 @@
 			path = LeBaluchonUITests;
 			sourceTree = "<group>";
 		};
+		5376013C2851152300A9D833 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				5376013D2851154500A9D833 /* WeatherViewController.swift */,
+				5376013F285115D500A9D833 /* CurrencyViewController.swift */,
+				537601412851161100A9D833 /* TranslationViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		53B0AC782893CCA200C00469 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				53B0AC7D2893D03500C00469 /* Translation */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		53B0AC7D2893D03500C00469 /* Translation */ = {
+			isa = PBXGroup;
+			children = (
+				53B0AC792893D01E00C00469 /* TranslationService.swift */,
+				53B0AC7B2893D02F00C00469 /* Translation.swift */,
+			);
+			path = Translation;
+			sourceTree = "<group>";
+		};
+		53CD127B2874BA5600153C7E /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				534C3801288A026B00368170 /* Lottie_Currency.json */,
+				53CD127C2874BA9B00153C7E /* Lottie_Translate.json */,
+			);
+			path = Animations;
+			sourceTree = "<group>";
+		};
+		5EAB8530D19790EF16A369E7 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FD12DE2C610D39DD6B735029 /* Pods-LeBaluchon.debug.xcconfig */,
+				672C9A7D5017F871B46F2BFE /* Pods-LeBaluchon.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		A16DA5B13B0B2480FF21ACE4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				43BC929D0E5493A03B62CCF1 /* Pods_LeBaluchon.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -134,9 +208,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 537601332851150700A9D833 /* Build configuration list for PBXNativeTarget "LeBaluchon" */;
 			buildPhases = (
+				D77CEF21E3276646B1AA2995 /* [CP] Check Pods Manifest.lock */,
 				53760105285114FF00A9D833 /* Sources */,
 				53760106285114FF00A9D833 /* Frameworks */,
 				53760107285114FF00A9D833 /* Resources */,
+				48B1A9E3CB8BAD79CD850423 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -233,7 +309,9 @@
 			files = (
 				537601192851150600A9D833 /* LaunchScreen.storyboard in Resources */,
 				537601162851150600A9D833 /* Assets.xcassets in Resources */,
+				53CD127D2874BA9B00153C7E /* Lottie_Translate.json in Resources */,
 				53760114285114FF00A9D833 /* Main.storyboard in Resources */,
+				534C3802288A026B00368170 /* Lottie_Currency.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,14 +331,60 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		48B1A9E3CB8BAD79CD850423 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LeBaluchon/Pods-LeBaluchon-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LeBaluchon/Pods-LeBaluchon-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LeBaluchon/Pods-LeBaluchon-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D77CEF21E3276646B1AA2995 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LeBaluchon-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		53760105285114FF00A9D833 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				53760111285114FF00A9D833 /* ViewController.swift in Sources */,
+				5376013E2851154500A9D833 /* WeatherViewController.swift in Sources */,
+				537601422851161100A9D833 /* TranslationViewController.swift in Sources */,
 				5376010D285114FF00A9D833 /* AppDelegate.swift in Sources */,
 				5376010F285114FF00A9D833 /* SceneDelegate.swift in Sources */,
+				53B0AC7C2893D02F00C00469 /* Translation.swift in Sources */,
+				53760140285115D500A9D833 /* CurrencyViewController.swift in Sources */,
+				53B0AC7A2893D01E00C00469 /* TranslationService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,6 +556,7 @@
 		};
 		537601342851150700A9D833 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FD12DE2C610D39DD6B735029 /* Pods-LeBaluchon.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -445,6 +570,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -460,6 +586,7 @@
 		};
 		537601352851150700A9D833 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 672C9A7D5017F871B46F2BFE /* Pods-LeBaluchon.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -473,6 +600,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
