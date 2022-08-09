@@ -139,12 +139,11 @@ class TranslationViewController: UIViewController {
     }
     
     @IBAction func translate() {
-        TranslationService.shared.getUserText(textEnter: upperTextView.text)
-        TranslationService.shared.getTranslation { success, result in
-            guard success, let getTranslate = result else {
+        TranslationService.shared.translate(source: "fr" , q: upperTextView.text, target: "en") { result in
+            guard let trans = result else {
                 return
             }
-            self.update(textChange: getTranslate)
+            self.update(textChange: trans)
         }
     }
     
