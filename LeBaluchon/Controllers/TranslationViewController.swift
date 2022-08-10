@@ -135,7 +135,20 @@ class TranslationViewController: UIViewController {
     }
     
     @IBAction func swapLanguage(_ sender: Any) {
-        
+        reverseButton.isSelected = !reverseButton.isSelected
+        guard reverseButton.isSelected == true else {
+            clearText()
+            self.reverseButton.layer.cornerRadius = reverseButton.bounds.size.height / 2
+            self.reverseButton.clipsToBounds = false
+            TranslationService.shared.changeLanguage(source: "en", target: "fr")
+            self.firstLanguageButton.setTitle(languages[1], for: .normal)
+            self.secondLanguageButton.setTitle(languages[0], for: .normal)
+            return
+        }
+            clearText()
+            TranslationService.shared.changeLanguage(source: "fr", target: "en")
+            self.firstLanguageButton.setTitle(languages[0], for: .normal)
+            self.secondLanguageButton.setTitle(languages[1], for: .normal)
     }
     
     @IBAction func translate() {
@@ -154,7 +167,13 @@ class TranslationViewController: UIViewController {
         }
         lowerTextView.text = translate
     }
+    
+    private func clearText() {
+        lowerTextView.text = ""
+        upperTextView.text = ""
+    }
 }
+
 
 extension TranslationViewController: UITextViewDelegate {
     func textViewDelegate() {

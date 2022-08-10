@@ -14,9 +14,15 @@ class TranslationService {
     
     let apiKey = "AIzaSyAJ6HSwVtaEhSx5NFX42X5OZDsYt6-B4Ls"
     let session = URLSession(configuration: .default)
-    
+    var langSource = "fr"
+    var langTarget = "en"
     private var task: URLSessionDataTask?
     
+    
+    func changeLanguage(source: String, target: String) {
+        TranslationService.shared.langSource = source
+        TranslationService.shared.langTarget = target
+        }
     
     func translate(source: String, q: String, target: String, completion: @escaping (Translate?) -> Void)  {
         var urlComponents = URLComponents()
@@ -25,9 +31,9 @@ class TranslationService {
         urlComponents.path = "/language/translate/v2"
         urlComponents.queryItems = [
             URLQueryItem(name: "key", value: apiKey),
-            URLQueryItem(name: "source", value: source),
+            URLQueryItem(name: "source", value: langSource),
             URLQueryItem(name: "q", value: q),
-            URLQueryItem(name: "target", value: target),
+            URLQueryItem(name: "target", value: langTarget),
             URLQueryItem(name: "format", value: "text"),]
         
         guard let urlTranslate = urlComponents.url?.absoluteString else { return }
