@@ -20,7 +20,12 @@ class CurrencyViewController: UIViewController {
     @IBOutlet private weak var swapButton: UIButton!
     @IBOutlet private weak var currencyPickerView: UIPickerView!
     
-    let currencies = ["Euro € 🇪🇺","Dollar $ 🇺🇸", "Pound £ 🇬🇧", "Yen ￥ 🇯🇵", "Won ₩ 🇰🇷"]
+    let currencies : [Currencies]? = [.euro, .dollar]
+    var sourceKeys : String = Currencies.euro.currenciesKeys
+    var targetKeys : String = Currencies.dollar.currenciesKeys
+    var sourceNames: String = Currencies.euro.currenciesNames
+    var targetNames: String = Currencies.dollar.currenciesNames
+    
     let placeholder = "Saisissez le montant"
     
     override func viewDidLoad() {
@@ -37,9 +42,9 @@ class CurrencyViewController: UIViewController {
         self.swapButton.layer.cornerRadius = swapButton.bounds.size.height / 2
         self.swapButton.clipsToBounds = false
         
-        self.firstCurrencyButton.setTitle(currencies[0], for: .normal)
+        self.firstCurrencyButton.setTitle(sourceNames, for: .normal)
         self.firstCurrencyButton.setTitleColor(.black, for: .normal)
-        self.secondCurrencyButton.setTitle(currencies[1], for: .normal)
+        self.secondCurrencyButton.setTitle(targetNames, for: .normal)
         self.secondCurrencyButton.setTitleColor(.black, for: .normal)
 
         self.upperTextView.delegate = self
@@ -138,6 +143,45 @@ class CurrencyViewController: UIViewController {
     @IBAction func swapLanguage(_ sender: Any) {
 
     }
+    
+    @IBAction func convertResult() {
+        CurrencyService.shared.getExchange { result in
+            guard let convert = result else {
+                return
+            }
+            self.update(textChange: convert)
+        }
+    }
+    
+    private func update(textChange: Currency) {
+        guard let convert = textChange.base else {
+            print("no3")
+            lowerTextView.text = nil
+            return
+        }
+        lowerTextView.text = String(convert)
+    }
+    
+    private func clearText() {
+        lowerTextView.text = ""
+        upperTextView.text = ""
+    }
+
+    func getConversion(pickerView: UIPickerView) {
+        let sourceRow = pickerView.selectedRow(inComponent: 0)
+        let targetRow = pickerView.selectedRow(inComponent: 1)
+        
+        guard let source = currencies?[sourceRow].currenciesKeys else { return }
+        guard let target = currencies?[targetRow].currenciesKeys else { return }
+        
+        if source == target {
+            print("done")
+            //            self.alertSameLanguage()
+        } else {
+            convertResult()
+            //            fetchDataTranslation(source: source, q: upperTextView.text ?? "no Text", target: target)
+        }
+    }
 }
 
 extension CurrencyViewController: UITextViewDelegate {
@@ -172,20 +216,23 @@ extension CurrencyViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return self.currencies.count
+        return self.currencies?.count ?? 2
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return self.currencies[row]
+        return self.currencies?[row].currenciesNames
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let choiceOne = pickerView.selectedRow(inComponent: 0)
         let choiceTwo = pickerView.selectedRow(inComponent: 1)
+        
+        sourceKeys = currencies?[choiceOne].currenciesKeys ?? ""
+        targetKeys = currencies?[choiceTwo].currenciesKeys ?? ""
 
-        self.firstCurrencyButton.setTitle(currencies[choiceOne], for: .normal)
+        self.firstCurrencyButton.setTitle(currencies?[choiceOne].currenciesNames, for: .normal)
         self.firstCurrencyButton.setTitleColor(.black, for: .normal)
-        self.secondCurrencyButton.setTitle(currencies[choiceTwo], for: .normal)
+        self.secondCurrencyButton.setTitle(currencies?[choiceTwo].currenciesNames, for: .normal)
         self.secondCurrencyButton.setTitleColor(.black, for: .normal)
         self.upperTextView.isHidden = false
         self.lowerTextView.isHidden = false

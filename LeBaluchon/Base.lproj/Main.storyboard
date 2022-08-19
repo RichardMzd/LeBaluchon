@@ -271,7 +271,7 @@
                                             <action selector="selectFirstCurren:" destination="xZ8-Gd-jTa" eventType="touchUpInside" id="QN2-Qm-ecy"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BhG-hG-QlC" userLabel="Swap Button">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BhG-hG-QlC" userLabel="Swap Button">
                                         <rect key="frame" x="155" y="0.0" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="BhG-hG-QlC" secondAttribute="height" multiplier="1:1" id="ynE-JA-a6i"/>
@@ -311,6 +311,10 @@
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                <connections>
+                                    <action selector="convertResult" destination="xZ8-Gd-jTa" eventType="touchUpInside" id="u7i-c9-I2n"/>
+                                    <action selector="swapLanguage:" destination="xZ8-Gd-jTa" eventType="touchUpInside" id="mCe-GO-UZA"/>
+                                </connections>
                             </button>
                             <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="esB-Me-FDN" userLabel="Currency Picker View">
                                 <rect key="frame" x="0.0" y="307" width="390" height="162"/>
