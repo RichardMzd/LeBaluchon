@@ -24,6 +24,7 @@ class CurrencyService {
     
     func getExchange(completion: @escaping (Currency?) -> Void) {
             guard let exchangeUrl = URL(string: "https://api.apilayer.com/fixer/latest?access_key=6N8X7HSSoNgvDCsE1t2NulVTCw6w934w&symbols=USD") else { return }
+        
             task?.cancel()
             task = session.dataTask(with: exchangeUrl, completionHandler: { (data, response, error) in
                 

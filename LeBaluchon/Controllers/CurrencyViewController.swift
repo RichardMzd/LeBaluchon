@@ -155,11 +155,10 @@ class CurrencyViewController: UIViewController {
     
     private func update(textChange: Currency) {
         guard let convert = textChange.base else {
-            print("no3")
             lowerTextView.text = nil
             return
         }
-        lowerTextView.text = String(convert)
+        lowerTextView.text = Rates.CodingKeys.usd.stringValue
     }
     
     private func clearText() {
