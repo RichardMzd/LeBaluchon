@@ -253,7 +253,7 @@ extension CurrencyViewController {
 extension CurrencyViewController {
     
     private func presentAlert() {
-        let alertVC = UIAlertController.init(title: "Une erreur est survenue", message: "Erreur de chargement", preferredStyle: .alert)
+        let alertVC = UIAlertController.init(title: "Erreur", message: "Le chargement a échoué", preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         present(alertVC, animated: true, completion: nil)
     }
