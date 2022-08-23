@@ -76,6 +76,8 @@ class TranslationViewController: UIViewController {
         
         self.reverseButton.setImage(imageButton, for: .normal)
         self.reverseButton.tintColor = .red
+        self.reverseButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+
         
         self.translateButton.setTitle("Traduire", for: .normal)
         self.translateButton.setTitleColor(.black, for: .normal)
@@ -144,7 +146,7 @@ class TranslationViewController: UIViewController {
     }
     
     @IBAction func swapLanguage(_ sender: UIButton) {
-        sender.isSelected = !sender.isSelected
+        sender.isSelected = !reverseButton.isSelected
         guard sender.isSelected == false else {
             clearText()
             TranslationService.shared.changeLanguage(source: targetKeys, target: sourceKeys)

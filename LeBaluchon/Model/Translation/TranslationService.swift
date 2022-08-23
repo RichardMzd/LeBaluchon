@@ -31,9 +31,9 @@ class TranslationService {
         urlComponents.path = "/language/translate/v2"
         urlComponents.queryItems = [
             URLQueryItem(name: "key", value: apiKey),
-            URLQueryItem(name: "source", value: langSource),
+            URLQueryItem(name: "source", value: source),
             URLQueryItem(name: "q", value: q),
-            URLQueryItem(name: "target", value: langTarget),
+            URLQueryItem(name: "target", value: target),
             URLQueryItem(name: "format", value: "text"),]
         
         guard let urlTranslate = urlComponents.url?.absoluteString else { return }

@@ -28,6 +28,10 @@ class CurrencyViewController: UIViewController {
     
     let placeholder = "Saisissez le montant"
     
+    var baseCurrency: Double = 0.00
+    var targetCurrency: Double = 0.00
+    var baseValue: Double = 0.00
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -66,6 +70,9 @@ class CurrencyViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.animationIcon.play(completion: nil)
+        textViewDelegate()
+        textViewDidBeginEditing(upperTextView)
+        textViewDidEndEditing(upperTextView)
     }
     
     func setButtonStyle() {
@@ -115,6 +122,7 @@ class CurrencyViewController: UIViewController {
     }
     
     @IBAction func selectFirstCurren(_ sender: Any) {
+        getConversion(pickerView: currencyPickerView)
         if currencyPickerView.isHidden {
             self.currencyPickerView.isHidden = false
             self.upperTextView.isHidden = true
@@ -128,6 +136,7 @@ class CurrencyViewController: UIViewController {
     }
     
     @IBAction func selectSecondCurren(_ sender: Any) {
+        getConversion(pickerView: currencyPickerView)
         if currencyPickerView.isHidden {
             self.currencyPickerView.isHidden = false
             self.upperTextView.isHidden = true
@@ -140,25 +149,45 @@ class CurrencyViewController: UIViewController {
         }
     }
     
-    @IBAction func swapLanguage(_ sender: Any) {
-
+//    @IBAction func swapLanguage(_ sender: Any) {
+//
+//    }
+    
+    @IBAction func convertResult(_ sender: UIButton) {
+        print("ok")
+        getRatesResult()
     }
     
-    @IBAction func convertResult() {
-        CurrencyService.shared.getExchange { result in
-            guard let convert = result else {
-                return
+    private func getRatesResult() {
+        CurrencyService.shared.getExchange2 { (result) in
+            switch result {
+            case .some(let success):
+                self.update(textChange: success)
+                print("convert")
+            case .none:
+                self.presentAlert()
+                print("failed")
             }
-            self.update(textChange: convert)
-        }
+            print(self.upperTextView.text)
+            print(self.lowerTextView.text)
+         }
     }
     
     private func update(textChange: Currency) {
-        guard let convert = textChange.base else {
-            lowerTextView.text = nil
-            return
-        }
-        lowerTextView.text = Rates.CodingKeys.usd.stringValue
+        baseCurrency = textChange.rates?.usd
+        targetCurrency = Double(textChange.base)
+        baseValue = Double(upperTextView.text!) ?? 1.00
+        
+        var conversion = (baseValue * targetCurrency / baseCurrency)
+                conversion = round(conversion * 100) / 100
+                
+                if upperTextView.text != "" {
+                    lowerTextView.text = String(conversion)
+                } else {
+                    var USDRate = target.usd
+                    USDRate = round(USDRate * 100) / 100
+                    lowerTextView.text = String(USDRate)
+                }
     }
     
     private func clearText() {
@@ -175,9 +204,11 @@ class CurrencyViewController: UIViewController {
         
         if source == target {
             print("done")
+            getRatesResult()
             //            self.alertSameLanguage()
         } else {
-            convertResult()
+            print("done33")
+            getRatesResult()
             //            fetchDataTranslation(source: source, q: upperTextView.text ?? "no Text", target: target)
         }
     }
@@ -205,6 +236,26 @@ extension CurrencyViewController: UITextViewDelegate {
             textView.text = placeholder
             textView.textColor = .lightGray
         }
+    }
+}
+
+extension CurrencyViewController {
+    func textViewShouldReturn(_ textView: UITextView) -> Bool {
+        getRatesResult()
+        return true
+    }
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        guard let text = textView.text else { return }
+        if text.isEmpty { lowerTextView.text = "\(round(targetCurrency * 100) / 100)" }
+    }
+}
+
+extension CurrencyViewController {
+    
+    private func presentAlert() {
+        let alertVC = UIAlertController.init(title: "Une erreur est survenue", message: "Erreur de chargement", preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        present(alertVC, animated: true, completion: nil)
     }
 }
 

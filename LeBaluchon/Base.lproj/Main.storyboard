@@ -61,15 +61,14 @@
                                             <action selector="selectFirstLang:" destination="cWK-EZ-QU5" eventType="touchUpInside" id="bXP-fm-VGy"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NAc-gD-tgo">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NAc-gD-tgo">
                                         <rect key="frame" x="155" y="0.0" width="40" height="40"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="NAc-gD-tgo" secondAttribute="height" multiplier="1:1" id="18O-2w-Vq4"/>
                                         </constraints>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <connections>
-                                            <action selector="swapLanguage:" destination="cWK-EZ-QU5" eventType="touchUpInside" id="NAn-NG-gAv"/>
+                                            <action selector="swapLanguage:" destination="cWK-EZ-QU5" eventType="touchUpInside" id="Dm5-DA-uuU"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Cl-tU-9Is" userLabel="Second Language Button">
@@ -277,9 +276,6 @@
                                             <constraint firstAttribute="width" secondItem="BhG-hG-QlC" secondAttribute="height" multiplier="1:1" id="ynE-JA-a6i"/>
                                         </constraints>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <connections>
-                                            <action selector="swapLanguage:" destination="xZ8-Gd-jTa" eventType="touchUpInside" id="osh-wo-RGC"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cui-oq-SVV" userLabel="Second Currency Button">
                                         <rect key="frame" x="215" y="0.0" width="135" height="40"/>
@@ -304,16 +300,14 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bI7-mQ-WZ6">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bI7-mQ-WZ6">
                                 <rect key="frame" x="20" y="686" width="350" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="bI7-mQ-WZ6" secondAttribute="height" multiplier="7:1" id="zF0-c4-av2"/>
                                 </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <connections>
-                                    <action selector="convertResult" destination="xZ8-Gd-jTa" eventType="touchUpInside" id="u7i-c9-I2n"/>
-                                    <action selector="swapLanguage:" destination="xZ8-Gd-jTa" eventType="touchUpInside" id="mCe-GO-UZA"/>
+                                    <action selector="convertResult:" destination="xZ8-Gd-jTa" eventType="touchUpInside" id="hTO-oU-TE5"/>
                                 </connections>
                             </button>
                             <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="esB-Me-FDN" userLabel="Currency Picker View">
