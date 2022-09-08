@@ -13,18 +13,22 @@ class TranslationService {
     
     
     let apiKey = "AIzaSyAJ6HSwVtaEhSx5NFX42X5OZDsYt6-B4Ls"
-    let session = URLSession(configuration: .default)
-    var langSource = "fr"
-    var langTarget = "en"
+    static var langSource = "fr"
+    static var langTarget = "en"
     private var task: URLSessionDataTask?
+    
+    private var session = URLSession(configuration: .default)
+    init(session: URLSession) {
+            self.session = session
+        }
     
     
     func changeLanguage(source: String, target: String) {
-        TranslationService.shared.langSource = source
-        TranslationService.shared.langTarget = target
+        TranslationService.langSource = source
+        TranslationService.langTarget = target
         }
     
-    func translate(source: String, q: String, target: String, completion: @escaping (Translate?) -> Void)  {
+    func translate(source: String, q: String, target: String, completion: @escaping (Bool, Translate?) -> Void)  {
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
         urlComponents.host = "translation.googleapis.com"
@@ -42,22 +46,22 @@ class TranslationService {
         task = session.dataTask(with: url)  { (data, response, error) in
             DispatchQueue.main.async {
                 guard let data = data, error == nil else {
-                    completion(nil)
+                    completion(false, nil)
                     return
                 }
                 guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    completion(nil)
+                    completion(false, nil)
                     return
                 }
-                do {
-                    let responseJSON = try JSONDecoder().decode(Translate.self, from: data)
-                    completion(responseJSON)
-                } catch {
-                    completion(nil)
-                    print("Error")
+                guard let responseJSON = try? JSONDecoder().decode(Translate.self, from: data) else {
+                    completion(false, nil)
+                    return
                 }
+                let translatedResponse: Translate = responseJSON
+                completion(true, translatedResponse)
             }
         }
         task?.resume()
     }
+    
 }

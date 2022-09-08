@@ -9,90 +9,61 @@ import Foundation
 
 class CurrencyService {
     static var shared = CurrencyService()
-//    private init() {}
+    private init() {}
     
-    private static let urlRates = URL(string: "http://api.apilayer.com/fixer/latest?access_key=gk5j5CYzPEJnrtIV58NWQAmA3TOxHWW3")!
-
-    
-    private var session = URLSession(configuration: .default)
-    init(session: URLSession = .shared) {
-            self.session = session
-        }
+    private static let urlRates = URL(string: "https://api.apilayer.com/exchangerates_data/latest?apikey=IKKzslSMVxgd8AUTUKA46kUWSRutPk7d")!
     
     private var task: URLSessionDataTask?
     
-    var changeSource = "EUR"
-    var changeTarget = "USD"
+    private var session = URLSession(configuration: .default)
+    init(session: URLSession) {
+            self.session = session
+        }
     
-    func changeLanguage(source: String, target: String) {
+    var changeSource = Rates.CodingKeys.eur.rawValue
+    var changeTarget = Rates.CodingKeys.usd.rawValue
+    
+    func changeCurrency(source: String, target: String) {
         CurrencyService.shared.changeSource = source
         CurrencyService.shared.changeTarget = target
     }
     
-    func getExchange(completion: @escaping (_ result: Currency?) -> Void) {
+    func getExchange(base: String, q: String, target: String ,completion: @escaping (Bool, Currency?) -> Void) {
+        var urlComponents = URLComponents()
         var request = URLRequest(url: CurrencyService.urlRates)
-        request.httpMethod = "GET"
+        request.httpMethod = "Get"
+
+        urlComponents.queryItems = [
+            URLQueryItem(name: "source", value: base),
+            URLQueryItem(name: "q", value: q),
+            URLQueryItem(name: "target", value: target),
+            URLQueryItem(name: "format", value: "text"),]
         
         task?.cancel()
         task = session.dataTask(with: request) { (data, response, error) in
             DispatchQueue.main.async {
                 guard let data = data, error == nil else {
-                    completion(.none)
+                    completion(false, nil)
                     return
                 }
                 guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    completion(.none)
+                    completion(false, nil)
                     return
                 }
                 guard let responseJSON = try? JSONDecoder().decode(Currency.self, from: data) else {
-                    completion(.none)
+                    completion(false, nil)
                     return
                 }
-                completion(.some(responseJSON))
-                print(responseJSON)
+                let currencyResponse: Currency = responseJSON
+                completion(true, currencyResponse)
             }
         }
         task?.resume()
     }
+}
 
 enum NetworkError: Error {
     case noData, noResponse, undecodableData
 }
 
-//    func convert(completion: @escaping (Currency?) -> Void)  {
-//        var urlComponents = URLComponents()
-//        urlComponents.scheme = "https"
-//        urlComponents.host = "api.apilayer.com"
-//        urlComponents.path = "/fixer/convert"
-//        urlComponents.queryItems = [
-//            URLQueryItem(name: "key", value: apiKey),
-//            URLQueryItem(name: "from", value: changeSource),
-//            URLQueryItem(name: "q", value: q),
-//            URLQueryItem(name: "to", value: changeTarget),
-//            URLQueryItem(name: "amount", value: "text"),]
-//
-//        guard let urlTranslate = urlComponents.url?.absoluteString else { return }
-//        guard let url = URL(string: urlTranslate) else { return }
-//
-//        task = session.dataTask(with: url)  { (data, response, error) in
-//            DispatchQueue.main.async {
-//                guard let data = data, error == nil else {
-//                    completion(nil)
-//                    return
-//                }
-//                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-//                    completion(nil)
-//                    return
-//                }
-//                do {
-//                    let responseJSON = try JSONDecoder().decode(Currency.self, from: data)
-//                    completion(responseJSON)
-//                } catch {
-//                    completion(nil)
-//                    print("Error")
-//                }
-//            }
-//        }
-//        task?.resume()
-//    }
 

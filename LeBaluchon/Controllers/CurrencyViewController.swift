@@ -9,29 +9,29 @@ import Foundation
 import UIKit
 import Lottie
 
-class CurrencyViewController: UIViewController {
+class CurrencyViewController: UIViewController, UITextViewDelegate {
     
+    // MARK: @IBOUTLETS & PROPRETIES
     @IBOutlet private weak var animationIcon: AnimationView!
-    @IBOutlet private weak var upperTextView: UITextView!
-    @IBOutlet private weak var lowerTextView: UITextView!
-    @IBOutlet private weak var firstCurrencyButton: UIButton!
-    @IBOutlet private weak var secondCurrencyButton: UIButton!
-    @IBOutlet private weak var convertButton: UIButton!
-    @IBOutlet private weak var swapButton: UIButton!
-    @IBOutlet private weak var currencyPickerView: UIPickerView!
+    @IBOutlet weak var upperTextView: UITextView!
+    @IBOutlet weak var lowerTextView: UITextView!
+    @IBOutlet weak var firstCurrencyButton: UIButton!
+    @IBOutlet weak var secondCurrencyButton: UIButton!
+    @IBOutlet weak var convertButton: UIButton!
+    @IBOutlet weak var swapButton: UIButton!
+    @IBOutlet weak var currencyPickerView: UIPickerView!
     
+    let placeholder = "Saisissez le montant"
     let currencies : [Currencies]? = [.euro, .dollar]
     var sourceKeys : String = Currencies.euro.currenciesKeys
     var targetKeys : String = Currencies.dollar.currenciesKeys
     var sourceNames: String = Currencies.euro.currenciesNames
     var targetNames: String = Currencies.dollar.currenciesNames
-    
-    let placeholder = "Saisissez le montant"
-    
     var baseCurrency: Double = 0.00
     var targetCurrency: Double = 0.00
     var baseValue: Double = 0.00
-
+    
+    // MARK: LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -50,7 +50,7 @@ class CurrencyViewController: UIViewController {
         self.firstCurrencyButton.setTitleColor(.black, for: .normal)
         self.secondCurrencyButton.setTitle(targetNames, for: .normal)
         self.secondCurrencyButton.setTitleColor(.black, for: .normal)
-
+        
         self.upperTextView.delegate = self
         self.upperTextView.text = placeholder
         self.upperTextView.textColor = .lightGray
@@ -64,7 +64,6 @@ class CurrencyViewController: UIViewController {
         
         self.updateStyle()
         self.setButtonStyle()
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -75,6 +74,7 @@ class CurrencyViewController: UIViewController {
         textViewDidEndEditing(upperTextView)
     }
     
+    // MARK: UI Methods settings
     func setButtonStyle() {
         let origImage = UIImage(named: "currency_exchange_symbol")
         let switchImage = UIImage(named: "swap")
@@ -83,7 +83,7 @@ class CurrencyViewController: UIViewController {
         
         self.swapButton.setImage(imageButton, for: .normal)
         self.swapButton.tintColor = .red
-
+        
         self.convertButton.setTitle("Convertir", for: .normal)
         self.convertButton.setTitleColor(.black, for: .normal)
         self.convertButton.setImage(tintedImage, for: .normal)
@@ -121,6 +121,9 @@ class CurrencyViewController: UIViewController {
         textView.layer.shadowRadius = 3.0
     }
     
+    // MARK: @IBACTIONS
+    
+    // Left pickerView appear while clicking on it
     @IBAction func selectFirstCurren(_ sender: Any) {
         getConversion(pickerView: currencyPickerView)
         if currencyPickerView.isHidden {
@@ -135,6 +138,7 @@ class CurrencyViewController: UIViewController {
         }
     }
     
+    // Right pickerView appear while clicking on it
     @IBAction func selectSecondCurren(_ sender: Any) {
         getConversion(pickerView: currencyPickerView)
         if currencyPickerView.isHidden {
@@ -149,52 +153,88 @@ class CurrencyViewController: UIViewController {
         }
     }
     
-//    @IBAction func swapLanguage(_ sender: Any) {
-//
-//    }
+    // IBAction to switch the currencies
+    @IBAction func swapCurrency(_ sender: UIButton) {
+        sender.isSelected = !swapButton.isSelected
+        guard swapButton.isSelected == false else {
+            clearText()
+            CurrencyService.shared.changeCurrency(source: sourceKeys, target: targetKeys)
+            self.firstCurrencyButton.setTitle(targetNames, for: .normal)
+            self.secondCurrencyButton.setTitle(sourceNames, for: .normal)
+            return
+        }
+        clearText()
+        TranslationService.shared.changeLanguage(source: targetKeys, target: sourceKeys)
+        self.firstCurrencyButton.setTitle(sourceNames, for: .normal)
+        self.secondCurrencyButton.setTitle(targetNames, for: .normal)
+    }
     
-    @IBAction func convertResult(_ sender: UIButton) {
-        print("ok")
+    // IBAction to get the result
+    @IBAction func getResult(_ sender: UIButton) {
         getRatesResult()
     }
     
+    // MARK: Methods
+    
+    // Method which allows to give the conversion according to the swapButtton
     private func getRatesResult() {
-        CurrencyService.shared.getExchange2 { (result) in
-            switch result {
-            case .some(let success):
-                self.update(textChange: success)
-                print("convert")
-            case .none:
-                self.presentAlert()
-                print("failed")
+        if swapButton.isSelected {
+            CurrencyService.shared.getExchange(base: targetKeys, q: upperTextView.text, target: sourceKeys) { (true, result) in
+                guard let trans = result else { return }
+                self.updateEUR(textChange: trans)
+                self.textViewEmpty(textview: self.upperTextView)
             }
-            print(self.upperTextView.text)
-            print(self.lowerTextView.text)
-         }
+        } else {
+            CurrencyService.shared.getExchange(base: sourceKeys, q: upperTextView.text, target: targetKeys) { (true, result) in
+                guard let trans = result else { return }
+                self.updateUSD(textChange: trans)
+                self.textViewEmpty(textview: self.upperTextView)
+            }
+        }
     }
     
-    private func update(textChange: Currency) {
-        baseCurrency = textChange.rates?.usd
-        targetCurrency = Double(textChange.base)
+    // Method that converts the value from euros to dollars
+    private func updateUSD(textChange: Currency) {
+        baseCurrency = Double(textChange.rates.eur)
+        targetCurrency = textChange.rates.usd
         baseValue = Double(upperTextView.text!) ?? 1.00
         
         var conversion = (baseValue * targetCurrency / baseCurrency)
-                conversion = round(conversion * 100) / 100
-                
-                if upperTextView.text != "" {
-                    lowerTextView.text = String(conversion)
-                } else {
-                    var USDRate = target.usd
-                    USDRate = round(USDRate * 100) / 100
-                    lowerTextView.text = String(USDRate)
-                }
+        conversion = round(conversion * 100) / 100
+        
+        if upperTextView.text != "" {
+            lowerTextView.text = String(conversion)
+        } else {
+            var USDValue = textChange.rates.usd
+            USDValue = round(USDValue * 100) / 100
+            lowerTextView.text = String(USDValue)
+        }
+    }
+    
+    // Method that converts the value from dollars to euros
+    private func updateEUR(textChange: Currency) {
+        baseCurrency = textChange.rates.usd
+        targetCurrency = Double(textChange.rates.eur)
+        baseValue = Double(upperTextView.text!) ?? 1.00
+        
+        var conversion = (baseValue * targetCurrency / baseCurrency)
+        conversion = round(conversion * 100) / 100
+        
+        if upperTextView.text != "" {
+            lowerTextView.text = String(conversion)
+        } else {
+            var USDValue = textChange.rates.eur
+            USDValue = Int(USDValue * 100) / 100
+            lowerTextView.text = String(USDValue)
+        }
     }
     
     private func clearText() {
         lowerTextView.text = ""
         upperTextView.text = ""
     }
-
+    
+    // Method that allows not to convert two same currencies
     func getConversion(pickerView: UIPickerView) {
         let sourceRow = pickerView.selectedRow(inComponent: 0)
         let targetRow = pickerView.selectedRow(inComponent: 1)
@@ -203,93 +243,9 @@ class CurrencyViewController: UIViewController {
         guard let target = currencies?[targetRow].currenciesKeys else { return }
         
         if source == target {
-            print("done")
-            getRatesResult()
-            //            self.alertSameLanguage()
+            alertWithValueError(value: "Erreur",message: "Tu ne peux pas convertir la meme devise.")
         } else {
-            print("done33")
             getRatesResult()
-            //            fetchDataTranslation(source: source, q: upperTextView.text ?? "no Text", target: target)
         }
-    }
-}
-
-extension CurrencyViewController: UITextViewDelegate {
-    func textViewDelegate() {
-        self.upperTextView.delegate = self
-        self.upperTextView.text = placeholder
-        self.upperTextView.textColor = .lightGray
-    }
-    
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == .lightGray {
-            textView.text = ""
-            textView.textColor = .black
-        } else {
-            textView.text = placeholder
-            textView.textColor = .lightGray
-        }
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text == "" {
-            textView.text = placeholder
-            textView.textColor = .lightGray
-        }
-    }
-}
-
-extension CurrencyViewController {
-    func textViewShouldReturn(_ textView: UITextView) -> Bool {
-        getRatesResult()
-        return true
-    }
-    func textViewDidChangeSelection(_ textView: UITextView) {
-        guard let text = textView.text else { return }
-        if text.isEmpty { lowerTextView.text = "\(round(targetCurrency * 100) / 100)" }
-    }
-}
-
-extension CurrencyViewController {
-    
-    private func presentAlert() {
-        let alertVC = UIAlertController.init(title: "Erreur", message: "Le chargement a échoué", preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-        present(alertVC, animated: true, completion: nil)
-    }
-}
-
-extension CurrencyViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-        
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 2
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return self.currencies?.count ?? 2
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return self.currencies?[row].currenciesNames
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let choiceOne = pickerView.selectedRow(inComponent: 0)
-        let choiceTwo = pickerView.selectedRow(inComponent: 1)
-        
-        sourceKeys = currencies?[choiceOne].currenciesKeys ?? ""
-        targetKeys = currencies?[choiceTwo].currenciesKeys ?? ""
-
-        self.firstCurrencyButton.setTitle(currencies?[choiceOne].currenciesNames, for: .normal)
-        self.firstCurrencyButton.setTitleColor(.black, for: .normal)
-        self.secondCurrencyButton.setTitle(currencies?[choiceTwo].currenciesNames, for: .normal)
-        self.secondCurrencyButton.setTitleColor(.black, for: .normal)
-        self.upperTextView.isHidden = false
-        self.lowerTextView.isHidden = false
-        self.firstCurrencyButton.isHidden = false
-        self.secondCurrencyButton.isHidden = false
-        self.swapButton.isHidden = false
-        
-        pickerView.isHidden = true
     }
 }

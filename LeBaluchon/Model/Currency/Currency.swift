@@ -10,34 +10,20 @@ import Foundation
 struct Currency: Codable {
     let success: Bool
     let timestamp: Int
-    let base, date: String
+    let base: String
     let rates: Rates
 }
 
+// MARK: - Rates
 struct Rates: Codable {
+    let eur: Int
     let usd: Double
 
     enum CodingKeys: String, CodingKey {
+        case eur = "EUR"
         case usd = "USD"
     }
 }
 
-struct CurrencyKey: Codable {
-    let success: Bool
-    let timestamp: Int
-    let base: String?
-    let rates: Rates
-    
-    struct Rates: Codable {
-            var EUR: Double
-            var USD: Double
-        }
-}
 
-//struct Currency: Codable {
-//    let success: Bool
-//    let timestamp: Int
-//    let base, date: String
-//    let rates: [String: Double]
-//}
 

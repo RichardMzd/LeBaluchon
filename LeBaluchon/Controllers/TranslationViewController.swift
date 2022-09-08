@@ -9,26 +9,26 @@ import Foundation
 import UIKit
 import Lottie
 
-class TranslationViewController: UIViewController {
+class TranslationViewController: UIViewController, UITextViewDelegate {
     
+// MARK: @IBOUTLETS & PROPRETIES
     @IBOutlet private weak var animationIcon: AnimationView!
-    @IBOutlet private weak var upperTextView: UITextView!
-    @IBOutlet private weak var lowerTextView: UITextView!
-    @IBOutlet private weak var firstLanguageButton: UIButton!
-    @IBOutlet private weak var secondLanguageButton: UIButton!
-    @IBOutlet private weak var translateButton: UIButton!
-    @IBOutlet private weak var reverseButton: UIButton!
-    @IBOutlet private weak var languagePickerView: UIPickerView!
+    @IBOutlet weak var upperTextView: UITextView!
+    @IBOutlet weak var lowerTextView: UITextView!
+    @IBOutlet weak var firstLanguageButton: UIButton!
+    @IBOutlet weak var secondLanguageButton: UIButton!
+    @IBOutlet weak var translateButton: UIButton!
+    @IBOutlet weak var swapButton: UIButton!
+    @IBOutlet weak var languagePickerView: UIPickerView!
     
-    let lang : [Languages]? = [.french, .english]
+    let placeholder = "Entrez votre texte"
+    let languages : [Languages]? = [.french, .english]
     var sourceKeys : String = Languages.french.languagesKeys
     var targetKeys : String = Languages.english.languagesKeys
-    
     var sourceNames: String = Languages.french.languagesNames
     var targetNames: String = Languages.english.languagesNames
     
-    let placeholder = "Entrez votre texte"
-    
+// MARK: LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,8 +40,8 @@ class TranslationViewController: UIViewController {
         self.languagePickerView.delegate = self
         self.languagePickerView.dataSource = self
         
-        self.reverseButton.layer.cornerRadius = reverseButton.bounds.size.height / 2
-        self.reverseButton.clipsToBounds = false
+        self.swapButton.layer.cornerRadius = swapButton.bounds.size.height / 2
+        self.swapButton.clipsToBounds = false
         
         self.firstLanguageButton.setTitle(sourceNames, for: .normal)
         self.firstLanguageButton.setTitleColor(.black, for: .normal)
@@ -68,16 +68,16 @@ class TranslationViewController: UIViewController {
         self.animationIcon.play(completion: nil)
     }
     
+// MARK: UI Methods settings
     func setButtonStyle() {
         let origImage = UIImage(named: "translate_symbol")
         let switchImage = UIImage(named: "swap")
         let tintedImage = origImage?.withRenderingMode(.alwaysTemplate)
         let imageButton = switchImage?.withRenderingMode(.alwaysTemplate)
         
-        self.reverseButton.setImage(imageButton, for: .normal)
-        self.reverseButton.tintColor = .red
-        self.reverseButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-
+        self.swapButton.setImage(imageButton, for: .normal)
+        self.swapButton.tintColor = .red
+        self.swapButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 2, bottom: 10, right: 2)
         
         self.translateButton.setTitle("Traduire", for: .normal)
         self.translateButton.setTitleColor(.black, for: .normal)
@@ -91,7 +91,7 @@ class TranslationViewController: UIViewController {
     func updateStyle() {
         self.setupButton(button: firstLanguageButton, color: .red, width: 1)
         self.setupButton(button: secondLanguageButton, color: .red, width: 1)
-        self.setupButton(button: reverseButton, color: .red, width: 1)
+        self.setupButton(button: swapButton, color: .red, width: 1)
         self.setupButton(button: translateButton, color: .blue, width: 1)
     }
     
@@ -116,7 +116,9 @@ class TranslationViewController: UIViewController {
         textView.layer.shadowRadius = 3.0
     }
     
+// MARK: @IBACTIONS
     
+    // Left pickerView appear while clicking on it
     @IBAction func selectFirstLang(_ sender: Any) {
         getTranslation(pickerView: languagePickerView)
         if languagePickerView.isHidden {
@@ -125,12 +127,13 @@ class TranslationViewController: UIViewController {
             self.lowerTextView.isHidden = true
             self.firstLanguageButton.isHidden = true
             self.secondLanguageButton.isHidden = true
-            self.reverseButton.isHidden = true
+            self.swapButton.isHidden = true
         } else {
             self.languagePickerView.isHidden = true
         }
     }
     
+    // Right pickerView appear while clicking on it
     @IBAction func selectSecondLang(_ sender: Any) {
         getTranslation(pickerView: languagePickerView)
         if languagePickerView.isHidden {
@@ -139,36 +142,54 @@ class TranslationViewController: UIViewController {
             self.lowerTextView.isHidden = true
             self.firstLanguageButton.isHidden = true
             self.secondLanguageButton.isHidden = true
-            self.reverseButton.isHidden = true
+            self.swapButton.isHidden = true
         } else {
             self.languagePickerView.isHidden = true
         }
     }
     
+    // IBAction to switch the languages
     @IBAction func swapLanguage(_ sender: UIButton) {
-        sender.isSelected = !reverseButton.isSelected
+        sender.isSelected = !swapButton.isSelected
         guard sender.isSelected == false else {
             clearText()
-            TranslationService.shared.changeLanguage(source: targetKeys, target: sourceKeys)
+            TranslationService.shared.changeLanguage(source: sourceKeys, target: targetKeys)
             self.firstLanguageButton.setTitle(targetNames, for: .normal)
             self.secondLanguageButton.setTitle(sourceNames, for: .normal)
             return
         }
         clearText()
-        TranslationService.shared.changeLanguage(source: sourceKeys, target: targetKeys)
+        TranslationService.shared.changeLanguage(source: targetKeys, target: sourceKeys)
         self.firstLanguageButton.setTitle(sourceNames, for: .normal)
         self.secondLanguageButton.setTitle(targetNames, for: .normal)
     }
     
+    // IBAction to get the translation
     @IBAction func translate() {
-        TranslationService.shared.translate(source: sourceKeys , q: upperTextView.text, target: targetKeys) { result in
-            guard let trans = result else {
-                return
+        textViewEmpty(textview: upperTextView)
+        if swapButton.isSelected {
+            TranslationService.shared.translate(source: targetKeys , q: upperTextView.text, target: sourceKeys) { (true, result) in
+                guard let trans = result else { return }
+                self.update(textChange: trans)
             }
-            self.update(textChange: trans)
+        } else {
+            TranslationService.shared.translate(source: sourceKeys , q: upperTextView.text, target: targetKeys) { (true, result) in
+                guard let trans = result else { return }
+                self.update(textChange: trans)
+            }
         }
     }
     
+// MARK: Methods
+    
+    // Method that check if the texView is empty
+    func textViewEmpty(textview: UITextView) {
+        if textview.text.isEmpty {
+            self.alertWithValueError(value: "Erreur", message: "Veuilez entrez du texte !")
+        }
+    }
+    
+    // Method which gives the result
     private func update(textChange: Translate) {
         guard let translate = textChange.data.translations.first?.translatedText else {
             lowerTextView.text = nil
@@ -182,81 +203,18 @@ class TranslationViewController: UIViewController {
         upperTextView.text = ""
     }
     
+   // Method that allows not to translate two same languages
     func getTranslation(pickerView: UIPickerView) {
         let sourceRow = pickerView.selectedRow(inComponent: 0)
         let targetRow = pickerView.selectedRow(inComponent: 1)
         
-        guard let source = lang?[sourceRow].languagesKeys else { return }
-        guard let target = lang?[targetRow].languagesKeys else { return }
+        guard let source = languages?[sourceRow].languagesKeys else { return }
+        guard let target = languages?[targetRow].languagesKeys else { return }
         
         if source == target {
-            print("done")
-            //            self.alertSameLanguage()
+            alertSameLanguage(message: "Tu ne peux pas traduire dans la même langue.")
         } else {
             translate()
-            //            fetchDataTranslation(source: source, q: upperTextView.text ?? "no Text", target: target)
         }
     }
 }
-
-
-extension TranslationViewController: UITextViewDelegate {
-    func textViewDelegate() {
-        self.upperTextView.delegate = self
-        self.upperTextView.text = placeholder
-        self.upperTextView.textColor = .lightGray
-    }
-    
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == .lightGray {
-            textView.text = ""
-            textView.textColor = .black
-        } else {
-            textView.text = placeholder
-            textView.textColor = .lightGray
-        }
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text == "" {
-            textView.text = placeholder
-            textView.textColor = .lightGray
-        }
-    }
-}
-
-extension TranslationViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 2
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return self.lang?.count ?? 2
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return self.lang?[row].languagesNames
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let choiceOne = pickerView.selectedRow(inComponent: 0)
-        let choiceTwo = pickerView.selectedRow(inComponent: 1)
-        
-        sourceKeys = lang?[choiceOne].languagesKeys ?? ""
-        targetKeys = lang?[choiceTwo].languagesKeys ?? ""
-        
-        self.firstLanguageButton.setTitle(lang?[choiceOne].languagesNames, for: .normal)
-        self.firstLanguageButton.setTitleColor(.black, for: .normal)
-        self.secondLanguageButton.setTitle(lang?[choiceTwo].languagesNames, for: .normal)
-        self.secondLanguageButton.setTitleColor(.black, for: .normal)
-        self.upperTextView.isHidden = false
-        self.lowerTextView.isHidden = false
-        self.firstLanguageButton.isHidden = false
-        self.secondLanguageButton.isHidden = false
-        self.reverseButton.isHidden = false
-        
-        pickerView.isHidden = true
-    }
-}
-
