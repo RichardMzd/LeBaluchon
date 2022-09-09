@@ -11,21 +11,21 @@ import XCTest
 class TranslationServiceTestCase: XCTestCase {
     
     var translation: TranslationService!
-        private let textToTranslate = "bonjour"
-
-        override func setUp() {
-            super.setUp()
-            TestURLProtocol.loadingHandler = { request in
-                let response: HTTPURLResponse = FakeResponseData.responseOK
-                let error: Error? = nil
-                let data: Data? = FakeResponseData.translateCorrectData
-                return (response, data, error)
-            }
-            let configuration = URLSessionConfiguration.ephemeral
-            configuration.protocolClasses = [TestURLProtocol.self]
-            let session = URLSession(configuration: configuration)
-            translation = TranslationService(session: session)
+    private let textToTranslate = "bonjour"
+    
+    override func setUp() {
+        super.setUp()
+        TestURLProtocol.loadingHandler = { request in
+            let response: HTTPURLResponse = FakeResponseData.responseOK
+            let error: Error? = nil
+            let data: Data? = FakeResponseData.translateCorrectData
+            return (response, data, error)
         }
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.protocolClasses = [TestURLProtocol.self]
+        let session = URLSession(configuration: configuration)
+        translation = TranslationService(session: session)
+    }
     
     func testGetQuoteShouldPostFailedCallbackIfError() {
         // Given
@@ -74,7 +74,7 @@ class TranslationServiceTestCase: XCTestCase {
         }
         wait(for: [expectation], timeout: 1)
     }
-
+    
     func testGetQuoteShouldPostFailedCallbackIfIncorrectResponse() {
         // Given
         TestURLProtocol.loadingHandler = { request in
@@ -98,7 +98,7 @@ class TranslationServiceTestCase: XCTestCase {
         }
         wait(for: [expectation], timeout: 0.01)
     }
-
+    
     func testGetQuoteShouldPostFailedCallbackIfIncorrectData() {
         // Given
         TestURLProtocol.loadingHandler = { request in
@@ -122,7 +122,7 @@ class TranslationServiceTestCase: XCTestCase {
         }
         wait(for: [expectation], timeout: 1)
     }
-
+    
     func testGetQuoteShouldPostSuccessCallbackIfNoErrorAndCorrectData() {
         // Given
         TestURLProtocol.loadingHandler = { request in
@@ -148,10 +148,10 @@ class TranslationServiceTestCase: XCTestCase {
         }
         wait(for: [expectation], timeout: 0.01)
     }
-
+    
     func testGivenChangeSourceLanguage_WhenTapOnChangeLanguageButton_LanguageChanged() {
         TranslationService.shared.changeLanguage(source: "en", target: "fr")
-
+        
         XCTAssertTrue(TranslationService.langSource == "en")
         XCTAssertTrue(TranslationService.langTarget == "fr")
     }

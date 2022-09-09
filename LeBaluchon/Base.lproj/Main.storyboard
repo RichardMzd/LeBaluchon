@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,7 +17,9 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="1Ei-tL-ZGf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" systemColor="systemGray4Color"/>
+                        <color key="backgroundColor" systemColor="tertiarySystemGroupedBackgroundColor"/>
+                        <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="selectedImageTintColor" red="1" green="0.49327188729999999" blue="0.47399842739999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="cWK-EZ-QU5" kind="relationship" relationship="viewControllers" id="ELZ-8t-lic"/>
@@ -131,7 +134,9 @@
                             <constraint firstItem="ea7-rv-CwC" firstAttribute="bottom" secondItem="Id5-TT-NwN" secondAttribute="bottom" constant="25" id="x9Y-qC-RJk"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Traduction" id="lL1-VQ-ScY"/>
+                    <tabBarItem key="tabBarItem" title="Traduction" id="lL1-VQ-ScY">
+                        <imageReference key="image" image="translate_symbol" symbolScale="medium"/>
+                    </tabBarItem>
                     <connections>
                         <outlet property="animationIcon" destination="Z2Y-gH-ue6" id="7Vx-G2-klH"/>
                         <outlet property="firstLanguageButton" destination="qae-CY-0io" id="YfV-lI-oac"/>
@@ -374,7 +379,9 @@
                             <constraint firstItem="XnC-Iw-qgr" firstAttribute="trailing" secondItem="HFF-RK-bu1" secondAttribute="trailing" constant="20" id="yOK-e1-1ZB"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Conversion" id="trk-P4-R3p"/>
+                    <tabBarItem key="tabBarItem" title="Conversion" id="trk-P4-R3p">
+                        <imageReference key="image" image="currency_exchange_symbol" symbolScale="medium"/>
+                    </tabBarItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="animationIcon" destination="7Js-Nb-8g3" id="pI5-kt-xcx"/>
@@ -392,21 +399,28 @@
             <point key="canvasLocation" x="-752" y="36"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="7Js-Nb-8g3"/>
+        <designable name="Z2Y-gH-ue6"/>
+        <designable name="xMl-q9-IFY"/>
+    </designables>
     <resources>
         <image name="Icon-Small-40" width="40" height="40"/>
+        <image name="currency_exchange_symbol" width="15" height="15"/>
+        <image name="translate_symbol" width="15" height="13"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
-        <systemColor name="systemGray4Color">
-            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemGray5Color">
             <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray6Color">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tertiarySystemGroupedBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>

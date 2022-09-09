@@ -15,12 +15,6 @@ class WeatherServiceCase: XCTestCase {
     private let city = "New-york"
 
     override func setUp() {
-        TestURLProtocol.loadingHandler = { request in
-            let response: HTTPURLResponse = FakeResponseData.responseOK
-            let error: Error? = nil
-            let data: Data? = FakeResponseData.weatherCorrectData
-            return (response, data, error)
-        }
         let configuration = URLSessionConfiguration.ephemeral
         configuration.protocolClasses = [TestURLProtocol.self]
         let session = URLSession(configuration: configuration)
@@ -153,8 +147,8 @@ class WeatherServiceCase: XCTestCase {
             XCTAssertEqual(sunset, weatherResult?.sys?.sunset)
             XCTAssertEqual(sunrise, weatherResult?.sys?.sunrise)
             XCTAssertEqual(icon, weatherResult?.weather?.first?.icon)
-            XCTAssertEqual(icon, weatherResult?.upDatePic(image: icon)) 
-            XCTAssertEqual(date, weatherResult?.timeStamp(time: Int(date) ?? 13))
+            XCTAssertEqual(icon, weatherResult?.updateIcon(image: icon))
+            XCTAssertEqual(date, weatherResult?.timeSet(time: Int(date) ?? 13))
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 1)

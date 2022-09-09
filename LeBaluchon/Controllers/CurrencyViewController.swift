@@ -181,13 +181,13 @@ class CurrencyViewController: UIViewController, UITextViewDelegate {
         if swapButton.isSelected {
             CurrencyService.shared.getExchange(base: targetKeys, q: upperTextView.text, target: sourceKeys) { (true, result) in
                 guard let trans = result else { return }
-                self.updateEUR(textChange: trans)
+                self.updateUSD(textChange: trans)
                 self.textViewEmpty(textview: self.upperTextView)
             }
         } else {
             CurrencyService.shared.getExchange(base: sourceKeys, q: upperTextView.text, target: targetKeys) { (true, result) in
                 guard let trans = result else { return }
-                self.updateUSD(textChange: trans)
+                self.updateEUR(textChange: trans)
                 self.textViewEmpty(textview: self.upperTextView)
             }
         }

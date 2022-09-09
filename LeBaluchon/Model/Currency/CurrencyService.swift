@@ -4,25 +4,27 @@
 //
 //  Created by Richard Arif Mazid on 12/08/2022.
 //
-
 import Foundation
 
 class CurrencyService {
+//MARK: Singleton pattern
     static var shared = CurrencyService()
     private init() {}
     
-    private static let urlRates = URL(string: "https://api.apilayer.com/exchangerates_data/latest?apikey=IKKzslSMVxgd8AUTUKA46kUWSRutPk7d")!
-    
+//MARK: Properties
+    var changeSource = Rates.CodingKeys.eur.rawValue
+    var changeTarget = Rates.CodingKeys.usd.rawValue
     private var task: URLSessionDataTask?
+    private static let urlRates = URL(string: "https://api.apilayer.com/exchangerates_data/latest?apikey=IKKzslSMVxgd8AUTUKA46kUWSRutPk7d")!
     
     private var session = URLSession(configuration: .default)
     init(session: URLSession) {
             self.session = session
         }
     
-    var changeSource = Rates.CodingKeys.eur.rawValue
-    var changeTarget = Rates.CodingKeys.usd.rawValue
+// MARK: Methods
     
+    // Method in order to switch source & target
     func changeCurrency(source: String, target: String) {
         CurrencyService.shared.changeSource = source
         CurrencyService.shared.changeTarget = target
@@ -46,24 +48,23 @@ class CurrencyService {
                     completion(false, nil)
                     return
                 }
+                print("Data OK")
                 guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
                     completion(false, nil)
                     return
                 }
+                print("Response status OK")
                 guard let responseJSON = try? JSONDecoder().decode(Currency.self, from: data) else {
                     completion(false, nil)
                     return
                 }
+                print("JSON OK")
                 let currencyResponse: Currency = responseJSON
                 completion(true, currencyResponse)
             }
         }
         task?.resume()
     }
-}
-
-enum NetworkError: Error {
-    case noData, noResponse, undecodableData
 }
 
 

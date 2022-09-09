@@ -43,15 +43,15 @@ struct MainWeather: Decodable {
     }
     
     //MARK: METHODS FOR WEATHER VIEW
-    func upDatePic(image: String) -> String {
+    func updateIcon(image: String) -> String {
         if image == "", image != self.weather?.first?.icon {
-            return "Nopic"
+            return "No icon"
         } else {
             return image
         }
     }
     
-    func timeStamp(time: Int) -> String {
+    func timeSet(time: Int) -> String {
         let date = Date(timeIntervalSince1970: TimeInterval(time))
         let formatter = DateFormatter()
         formatter.timeZone = TimeZone.autoupdatingCurrent

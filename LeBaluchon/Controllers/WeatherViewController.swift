@@ -33,7 +33,7 @@ class WeatherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         backgroundView.layer.addSublayer(gradientLayer)
-        fecthWeatherDataSearch(city: "Paris")
+        weatherDataSearch(city: "Paris")
         
         searchTextField.layer.cornerRadius = 15.0
         searchTextField.clipsToBounds = true
@@ -47,7 +47,7 @@ class WeatherViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         setBlueGradientBackground()
-        fecthWeatherDataSearch(city: "Paris")
+        weatherDataSearch(city: "Paris")
     }
   
 // MARK: UI Methods settings
@@ -74,13 +74,13 @@ class WeatherViewController: UIViewController {
     
     // Method that display the icon animation according to the weather and location
     func displayWeatherAnimation(weatherInfo: MainWeather) {
-        self.weatherAnimationView.animation = Animation.named(weatherInfo.upDatePic(image: weatherInfo.weather?.first?.icon ?? "Nopic"))
+        self.weatherAnimationView.animation = Animation.named(weatherInfo.updateIcon(image: weatherInfo.weather?.first?.icon ?? "Nopic"))
         self.weatherAnimationView.loopMode = .loop
         self.weatherAnimationView.contentMode = .scaleAspectFit
         self.weatherAnimationView.play()
     }
     // Method which gives city, country, temperature, weather conditions and sunrise/sunset time informations
-    func fecthWeatherDataSearch(city: String) {
+    func weatherDataSearch(city: String) {
         WeatherService.shared.getWeather(city: city) { (true, result) in
                 switch result {
                 case .some(let weatherInfo):
@@ -90,8 +90,8 @@ class WeatherViewController: UIViewController {
                         self.temperatureLabel.text = "\(Int(weatherInfo.main?.temp ?? 22)/10) °C"
                         self.weatherConditionLabel.text = weatherInfo.weather?.first?.description.capitalizeFirstLetter ?? "Couvert"
                         self.displayWeatherAnimation(weatherInfo: weatherInfo)
-                        self.sunriseLabel.text = "🌅 : \(weatherInfo.timeStamp(time: weatherInfo.sys?.sunrise ?? 0))"
-                        self.sunsetLabel.text = "🌇 : \(weatherInfo.timeStamp(time: weatherInfo.sys?.sunset ?? 0))"
+                        self.sunriseLabel.text = "🌅 : \(weatherInfo.timeSet(time: weatherInfo.sys?.sunrise ?? 0))"
+                        self.sunsetLabel.text = "🌇 : \(weatherInfo.timeSet(time: weatherInfo.sys?.sunset ?? 0))"
                     }
                 case .none:
                     DispatchQueue.main.async {
@@ -112,7 +112,7 @@ class WeatherViewController: UIViewController {
     // IBAction
     @IBAction func searchCity(_ sender: UIButton) {
         searchTextField.resignFirstResponder()
-        fecthWeatherDataSearch(city: searchTextField.text ?? "Tokyo")
+        weatherDataSearch(city: searchTextField.text ?? "Tokyo")
         textFieldEmpty(textfield: searchTextField)
     }
     

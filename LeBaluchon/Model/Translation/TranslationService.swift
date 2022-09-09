@@ -4,14 +4,14 @@
 //
 //  Created by Richard Arif Mazid on 29/07/2022.
 //
-
 import Foundation
 
 class TranslationService {
+//MARK: Singleton pattern
     static var shared = TranslationService()
     private init() {}
     
-    
+//MARK: Properties
     let apiKey = "AIzaSyAJ6HSwVtaEhSx5NFX42X5OZDsYt6-B4Ls"
     static var langSource = "fr"
     static var langTarget = "en"
@@ -22,7 +22,9 @@ class TranslationService {
             self.session = session
         }
     
-    
+//MARK: Methods
+
+    // Method in order to switch source & target
     func changeLanguage(source: String, target: String) {
         TranslationService.langSource = source
         TranslationService.langTarget = target
@@ -49,14 +51,17 @@ class TranslationService {
                     completion(false, nil)
                     return
                 }
+                print("Data OK")
                 guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
                     completion(false, nil)
                     return
                 }
+                print("Response status OK")
                 guard let responseJSON = try? JSONDecoder().decode(Translate.self, from: data) else {
                     completion(false, nil)
                     return
                 }
+                print("JSON OK")
                 let translatedResponse: Translate = responseJSON
                 completion(true, translatedResponse)
             }

@@ -4,22 +4,22 @@
 //
 //  Created by Richard Arif Mazid on 26/08/2022.
 //
-
 import Foundation
 
 class WeatherService {
+//MARK: Singleton pattern
     static var shared = WeatherService()
     private init() {}
     
-    private var session = URLSession(configuration: .default)
+//MARK: Properties
+    let apiKey = "04015d712e38f8bbd9e79697027ccbde"
     private var task: URLSessionDataTask?
     
-    let apiKey = "04015d712e38f8bbd9e79697027ccbde"
-    
+    private var session = URLSession(configuration: .default)
     init(session: URLSession) {
         self.session = session
     }
-    
+// MARK: Methods
     func getWeather(city: String, completion: @escaping (Bool, MainWeather?) -> Void) {
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
@@ -41,10 +41,12 @@ class WeatherService {
                     completion(false, nil)
                     return
                 }
+                print("Data OK")
                 guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
                     completion(false, nil)
                     return
                 }
+                print("Response status OK")
                 guard let responseJSON = try? JSONDecoder().decode(MainWeather.self, from: data) else {
                     completion(false, nil)
                     return
