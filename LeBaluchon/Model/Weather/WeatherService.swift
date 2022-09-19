@@ -20,7 +20,7 @@ class WeatherService {
         self.session = session
     }
 // MARK: Methods
-    func getWeather(city: String, completion: @escaping (Bool, MainWeather?) -> Void) {
+    func getWeather(city: String, completion: @escaping (String, MainWeather?) -> Void) {
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
         urlComponents.host = "api.openweathermap.org"
@@ -38,22 +38,19 @@ class WeatherService {
         task = session.dataTask(with: url) { (data, response, error) in
             DispatchQueue.main.async {
                 guard let data = data, error == nil else {
-                    completion(false, nil)
+                    completion("l'accès au serveur a échoué", nil)
                     return
                 }
-                print("Data OK")
                 guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    completion(false, nil)
+                    completion("erreur réseau", nil)
                     return
                 }
-                print("Response status OK")
                 guard let responseJSON = try? JSONDecoder().decode(MainWeather.self, from: data) else {
-                    completion(false, nil)
+                    completion("le statut de la réponse a échoué", nil)
                     return
                 }
-                print("JSON OK")
                 let searchWheather: MainWeather = responseJSON
-                completion(true, searchWheather)
+                completion("ok", searchWheather)
             }
         }
         task?.resume()

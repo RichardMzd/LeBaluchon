@@ -28,7 +28,7 @@ class WeatherViewController: UIViewController {
     }
     let gradientLayer = CAGradientLayer()
     let searchImage = UIImage(named: "search")
-    
+        
 // MARK: LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,7 +81,7 @@ class WeatherViewController: UIViewController {
     }
     // Method which gives city, country, temperature, weather conditions and sunrise/sunset time informations
     func weatherDataSearch(city: String) {
-        WeatherService.shared.getWeather(city: city) { (true, result) in
+        WeatherService.shared.getWeather(city: city) { (status, result) in
                 switch result {
                 case .some(let weatherInfo):
                     DispatchQueue.main.async {
@@ -94,6 +94,7 @@ class WeatherViewController: UIViewController {
                         self.sunsetLabel.text = "🌇 : \(weatherInfo.timeSet(time: weatherInfo.sys?.sunset ?? 0))"
                     }
                 case .none:
+                    self.serverError(status: status, result: result)
                     DispatchQueue.main.async {
                         let description = "\nSaisis un nom de ville correct."
                         print(description)
@@ -101,6 +102,12 @@ class WeatherViewController: UIViewController {
                 }
             }
         }
+    
+    func serverError(status: String, result: MainWeather?) {
+        guard let _ = result else {
+            self.alertServerAccess(error: status)
+            return }
+    }
     
     // Method that check if the textField is empty
     func textFieldEmpty(textfield: UITextField) {

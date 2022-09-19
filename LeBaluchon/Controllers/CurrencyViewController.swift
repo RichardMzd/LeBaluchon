@@ -179,16 +179,12 @@ class CurrencyViewController: UIViewController, UITextViewDelegate {
     // Method which allows to give the conversion according to the swapButtton
     private func getRatesResult() {
         if swapButton.isSelected {
-            CurrencyService.shared.getExchange(base: targetKeys, q: upperTextView.text, target: sourceKeys) { (true, result) in
-                guard let trans = result else { return }
-                self.updateUSD(textChange: trans)
-                self.textViewEmpty(textview: self.upperTextView)
+            CurrencyService.shared.getExchange(base: targetKeys, q: upperTextView.text, target: sourceKeys) { (status, result) in
+                self.serverError(status: status, result: result)
             }
         } else {
-            CurrencyService.shared.getExchange(base: sourceKeys, q: upperTextView.text, target: targetKeys) { (true, result) in
-                guard let trans = result else { return }
-                self.updateEUR(textChange: trans)
-                self.textViewEmpty(textview: self.upperTextView)
+            CurrencyService.shared.getExchange(base: sourceKeys, q: upperTextView.text, target: targetKeys) { (status, result) in
+                self.serverError(status: status, result: result)
             }
         }
     }
@@ -228,6 +224,19 @@ class CurrencyViewController: UIViewController, UITextViewDelegate {
             lowerTextView.text = String(USDValue)
         }
     }
+    
+    func serverError(status: String, result: Currency?) {
+        guard let trans = result else {
+            self.alertServerAccess(error: status)
+            return }
+        if swapButton.isSelected {
+            self.updateEUR(textChange: trans)
+        } else {
+            self.updateUSD(textChange: trans)
+        }
+        self.textViewEmpty(textview: self.upperTextView)
+    }
+    
     
     private func clearText() {
         lowerTextView.text = ""

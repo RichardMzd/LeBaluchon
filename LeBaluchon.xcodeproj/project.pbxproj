@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		21168B24B9475371F5398A36 /* Pods_LeBaluchon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43BC929D0E5493A03B62CCF1 /* Pods_LeBaluchon.framework */; };
 		534BA93728C5FB5F004CDE20 /* MessageAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534BA93628C5FB5F004CDE20 /* MessageAlerts.swift */; };
-		534C3802288A026B00368170 /* Lottie_Currency.json in Resources */ = {isa = PBXBuildFile; fileRef = 534C3801288A026B00368170 /* Lottie_Currency.json */; };
 		5376010D285114FF00A9D833 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5376010C285114FF00A9D833 /* AppDelegate.swift */; };
 		5376010F285114FF00A9D833 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5376010E285114FF00A9D833 /* SceneDelegate.swift */; };
 		53760114285114FF00A9D833 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53760112285114FF00A9D833 /* Main.storyboard */; };
@@ -24,6 +23,7 @@
 		53B0103328A4463500462024 /* Languages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B0103228A4463500462024 /* Languages.swift */; };
 		53B0AC7A2893D01E00C00469 /* TranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B0AC792893D01E00C00469 /* TranslationService.swift */; };
 		53B0AC7C2893D02F00C00469 /* Translation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B0AC7B2893D02F00C00469 /* Translation.swift */; };
+		53BBC5C428D0C7640027B21F /* Lottie_Currency.json in Resources */ = {isa = PBXBuildFile; fileRef = 53BBC5C328D0C7640027B21F /* Lottie_Currency.json */; };
 		53BCDE1028A698E9002C82BB /* CurrencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BCDE0F28A698E9002C82BB /* CurrencyService.swift */; };
 		53BCDE1228A6A8FC002C82BB /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BCDE1128A6A8FB002C82BB /* Currency.swift */; };
 		53BD0A8E28ACEB4E00F68BD7 /* Currencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BD0A8D28ACEB4E00F68BD7 /* Currencies.swift */; };
@@ -79,7 +79,6 @@
 /* Begin PBXFileReference section */
 		43BC929D0E5493A03B62CCF1 /* Pods_LeBaluchon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LeBaluchon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		534BA93628C5FB5F004CDE20 /* MessageAlerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageAlerts.swift; sourceTree = "<group>"; };
-		534C3801288A026B00368170 /* Lottie_Currency.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Lottie_Currency.json; path = ../../../../Downloads/Lottie_Currency.json; sourceTree = "<group>"; };
 		53760109285114FF00A9D833 /* LeBaluchon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeBaluchon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5376010C285114FF00A9D833 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5376010E285114FF00A9D833 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -98,6 +97,7 @@
 		53B0103228A4463500462024 /* Languages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Languages.swift; sourceTree = "<group>"; };
 		53B0AC792893D01E00C00469 /* TranslationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationService.swift; sourceTree = "<group>"; };
 		53B0AC7B2893D02F00C00469 /* Translation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translation.swift; sourceTree = "<group>"; };
+		53BBC5C328D0C7640027B21F /* Lottie_Currency.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Lottie_Currency.json; path = ../../../../../../Downloads/Lottie_Currency.json; sourceTree = "<group>"; };
 		53BCDE0F28A698E9002C82BB /* CurrencyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyService.swift; sourceTree = "<group>"; };
 		53BCDE1128A6A8FB002C82BB /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		53BD0A8D28ACEB4E00F68BD7 /* Currencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currencies.swift; sourceTree = "<group>"; };
@@ -188,11 +188,11 @@
 			children = (
 				5376010C285114FF00A9D833 /* AppDelegate.swift */,
 				5376010E285114FF00A9D833 /* SceneDelegate.swift */,
-				5376013C2851152300A9D833 /* Controllers */,
-				53C44AF528C7E05F00387A9A /* Extensions */,
 				53B0AC782893CCA200C00469 /* Model */,
-				53CD127B2874BA5600153C7E /* Animations */,
+				5376013C2851152300A9D833 /* Controllers */,
 				53760112285114FF00A9D833 /* Main.storyboard */,
+				53C44AF528C7E05F00387A9A /* Extensions */,
+				53CD127B2874BA5600153C7E /* Animations */,
 				537601152851150600A9D833 /* Assets.xcassets */,
 				537601172851150600A9D833 /* LaunchScreen.storyboard */,
 				5376011A2851150600A9D833 /* Info.plist */,
@@ -310,6 +310,7 @@
 		53CD127B2874BA5600153C7E /* Animations */ = {
 			isa = PBXGroup;
 			children = (
+				53BBC5C328D0C7640027B21F /* Lottie_Currency.json */,
 				53C2856B28BFAEDC00588086 /* 01d.json */,
 				53C2856128BFAEDB00588086 /* 01n.json */,
 				53C2856C28BFAEDC00588086 /* 02d.json */,
@@ -328,7 +329,6 @@
 				53C2856628BFAEDB00588086 /* 13n.json */,
 				53C2856728BFAEDB00588086 /* 50d.json */,
 				53C2855F28BFAEDB00588086 /* 50n.json */,
-				534C3801288A026B00368170 /* Lottie_Currency.json */,
 				53CD127C2874BA9B00153C7E /* Lottie_Translate.json */,
 			);
 			path = Animations;
@@ -458,6 +458,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				53C2857D28BFAEDC00588086 /* 01d.json in Resources */,
+				53BBC5C428D0C7640027B21F /* Lottie_Currency.json in Resources */,
 				53C2857328BFAEDC00588086 /* 01n.json in Resources */,
 				53C2857128BFAEDC00588086 /* 50n.json in Resources */,
 				53C2857828BFAEDC00588086 /* 13n.json in Resources */,
@@ -476,7 +477,6 @@
 				53C2857F28BFAEDC00588086 /* 09d.json in Resources */,
 				53C2857C28BFAEDC00588086 /* 11d.json in Resources */,
 				53760114285114FF00A9D833 /* Main.storyboard in Resources */,
-				534C3802288A026B00368170 /* Lottie_Currency.json in Resources */,
 				53C2857928BFAEDC00588086 /* 50d.json in Resources */,
 				53C2857028BFAEDC00588086 /* 10n.json in Resources */,
 				53C2857228BFAEDC00588086 /* 03d.json in Resources */,

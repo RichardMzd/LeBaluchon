@@ -168,16 +168,21 @@ class TranslationViewController: UIViewController, UITextViewDelegate {
     @IBAction func translate() {
         textViewEmpty(textview: upperTextView)
         if swapButton.isSelected {
-            TranslationService.shared.translate(source: targetKeys , q: upperTextView.text, target: sourceKeys) { (true, result) in
-                guard let trans = result else { return }
-                self.update(textChange: trans)
+            TranslationService.shared.translate(source: targetKeys , q: upperTextView.text, target: sourceKeys) { (status, result) in
+                self.testlang(status: status, result: result)
             }
         } else {
-            TranslationService.shared.translate(source: sourceKeys , q: upperTextView.text, target: targetKeys) { (true, result) in
-                guard let trans = result else { return }
-                self.update(textChange: trans)
+            TranslationService.shared.translate(source: sourceKeys , q: upperTextView.text, target: targetKeys) { (status, result) in
+                self.testlang(status: status, result: result)
             }
         }
+    }
+    
+    func testlang(status: String, result: Translate?) {
+        guard let trans = result else {
+            self.alertServerAccess(error: status)
+            return }
+        self.update(textChange: trans)
     }
     
 // MARK: Methods

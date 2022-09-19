@@ -30,7 +30,7 @@ class TranslationService {
         TranslationService.langTarget = target
         }
     
-    func translate(source: String, q: String, target: String, completion: @escaping (Bool, Translate?) -> Void)  {
+    func translate(source: String, q: String, target: String, completion: @escaping (String, Translate?) -> Void)  {
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
         urlComponents.host = "translation.googleapis.com"
@@ -48,22 +48,19 @@ class TranslationService {
         task = session.dataTask(with: url)  { (data, response, error) in
             DispatchQueue.main.async {
                 guard let data = data, error == nil else {
-                    completion(false, nil)
+                    completion("l'accès au serveur a échoué", nil)
                     return
                 }
-                print("Data OK")
                 guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    completion(false, nil)
+                    completion("erreur réseau", nil)
                     return
                 }
-                print("Response status OK")
                 guard let responseJSON = try? JSONDecoder().decode(Translate.self, from: data) else {
-                    completion(false, nil)
+                    completion("le statut de la réponse a échoué", nil)
                     return
                 }
-                print("JSON OK")
                 let translatedResponse: Translate = responseJSON
-                completion(true, translatedResponse)
+                completion("ok", translatedResponse)
             }
         }
         task?.resume()

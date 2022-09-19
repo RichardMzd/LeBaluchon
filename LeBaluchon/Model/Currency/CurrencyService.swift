@@ -30,7 +30,7 @@ class CurrencyService {
         CurrencyService.shared.changeTarget = target
     }
     
-    func getExchange(base: String, q: String, target: String ,completion: @escaping (Bool, Currency?) -> Void) {
+    func getExchange(base: String, q: String, target: String ,completion: @escaping (String, Currency?) -> Void) {
         var urlComponents = URLComponents()
         var request = URLRequest(url: CurrencyService.urlRates)
         request.httpMethod = "Get"
@@ -45,22 +45,19 @@ class CurrencyService {
         task = session.dataTask(with: request) { (data, response, error) in
             DispatchQueue.main.async {
                 guard let data = data, error == nil else {
-                    completion(false, nil)
+                    completion("l'accès au serveur a échoué", nil)
                     return
                 }
-                print("Data OK")
                 guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    completion(false, nil)
+                    completion("erreur réseau", nil)
                     return
                 }
-                print("Response status OK")
                 guard let responseJSON = try? JSONDecoder().decode(Currency.self, from: data) else {
-                    completion(false, nil)
+                    completion("le statut de la réponse a échoué", nil)
                     return
                 }
-                print("JSON OK")
                 let currencyResponse: Currency = responseJSON
-                completion(true, currencyResponse)
+                completion("ok", currencyResponse)
             }
         }
         task?.resume()
