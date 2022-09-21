@@ -1,5 +1,5 @@
 # LeBaluchon
-LeBaluchon it's an app where you can use 3 features including :
+LeBaluchon is an app where you can use 3 features including :
 - Translation
 - Currency exchange
 - Weather
